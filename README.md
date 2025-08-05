@@ -106,13 +106,13 @@ root/
 │
 ├── deploy/
 │   ├── deploy.sh                  # Deployment helper script
+│   ├── key-rotate.sh              # Generates a new key every day for jwk
 │   └── generate-env.sh            # Env scaffolding
 │
 ├── services/
 │   ├── users/
 │   │   ├── cmd/
-│   │   │   ├── server/main.go
-│   │   │   └── key_rotate/main.go  # CLI for rotating keys
+│   │   │   └── server/main.go
 │   │   ├── go.mod
 │   │   ├── go.sum
 │   │   ├── internal/

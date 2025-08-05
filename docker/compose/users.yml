@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  users-service:
+    build:
+      context: ../users
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - ../../envs/users.env
+    environment:
+      - DB_HOST=users-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=users
+    depends_on:
+      - users-db
+    volumes:
+      - keystore-private:/app/keystore/private
+      - keystore-public:/app/keystore/public
+    networks:
+      - users-network
+
+  users-db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=users
+    volumes:
+      - users-db-data:/var/lib/postgresql/data
+      - ../../services/users/migrations:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - users-network
+
+volumes:
+  users-db-data:
+  keystore-private:
+  keystore-public:
+
+networks:
+  users-network:
+    driver: bridge

@@ -1,0 +1,2 @@
+# Run key-rotate.sh daily at 23:00
+0 23 * * * /app/key-rotate.sh >> /app/key-rotate.log 2>&1
